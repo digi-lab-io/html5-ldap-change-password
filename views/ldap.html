@@ -1,0 +1,68 @@
+<head><title></title><link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/><script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script><script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script><script type="text/javascript" src="/bower_components/form.validation/dist/js/formValidation.min.js"></script><script type="text/javascript" src="/bower_components/form.validation/dist/js/framework/bootstrap.min.js"></script><script type="text/javascript" src="/javascripts/ldap-client-apacheds.js"></script><body><div class="container"><h1></h1><p>Welcome, please fill out the form:<form id="enableForm" method="POST" action="/ldap/change/password" data-toggle="validator" role="form" class="form-horizontal"><div class="form-group"><label class="col-xs-3 control-label">LDAP-Username:</label><div class="col-xs-5"><input type="text" name="userName" class="form-control"/></div></div><div class="form-group"><label class="col-xs-3 control-label">Old password</label><div class="col-xs-5"><input type="password" name="oldPassword" class="form-control"/></div></div><div class="form-group"><label class="col-xs-3 control-label">New password</label><div class="col-xs-5"><input type="password" name="password" class="form-control"/></div></div><div class="form-group"><label class="col-xs-3 control-label">Confirm password</label><div class="col-xs-5"><input type="password" name="confirmPassword" class="form-control"/></div></div><div class="form-group"><div class="col-xs-5 col-xs-offset-3"><button type="submit" class="btn btn-default">Change password</button></div></div></form></p></div><script>$(document).ready(function () {
+    $('#enableForm')
+            .formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    userName: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The full name is required and cannot be empty'
+                            }
+                        }
+                    },
+                    oldPassword: {
+                        enabled: true,
+                        validators: {
+                            notEmpty: {
+                                message: 'The old password is required and cannot be empty'
+                            }
+                        }
+                    }, password: {
+                        enabled: true,
+                        validators: {
+                            notEmpty: {
+                                message: 'The password is required and cannot be empty'
+                            },
+                            different: {
+                                field: 'oldPassword',
+                                message: 'Please provide a new password.'
+                            }
+                        }
+                    },
+                    confirmPassword: {
+                        enabled: true,
+                        validators: {
+                            notEmpty: {
+                                message: 'The confirm password is required and cannot be empty'
+                            },
+                            identical: {
+                                field: 'password',
+                                message: 'The password and its confirm must be the same'
+                            },
+                            different: {
+                                field: 'oldPassword',
+                                message: 'Please provide a new password.'
+                            }
+                        }
+                    }
+                }
+            })
+            // Enable the password/confirm password validators if the password is not empty
+            .on('keyup', '[name="password"]', function () {
+                var isEmpty = $(this).val() == '';
+                ('#enableForm')
+                        .formValidation('enableFieldValidators', 'password', !isEmpty)
+                        .formValidation('enableFieldValidators', 'confirmPassword', !isEmpty);
+
+                // Revalidate the field when user start typing in the password field
+                if ($(this).val().length == 1) {
+                    $('#enableForm').formValidation('validateField', 'password')
+                            .formValidation('validateField', 'confirmPassword');
+                }
+            });
+});</script></body></head><!DOCTYPE html><html></html>

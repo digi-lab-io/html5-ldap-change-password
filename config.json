@@ -1,0 +1,7 @@
+{
+  "ldap_host_url":      "ldap://127.0.0.1:10389",
+  "ldap_base_dn":       "dc=company,dc=com",
+  "ldap_bind_user":     "<user-dn>",
+  "ldap_bind_password": "",
+  "ldap_user_prefix":   "uid="
+}

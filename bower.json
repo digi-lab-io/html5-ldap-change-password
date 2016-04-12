@@ -1,0 +1,26 @@
+{
+  "name": "ldap-change",
+  "description": "ldap-change",
+  "main": "",
+  "authors": [
+    "4F2E4A2E <osoriojaques@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "node"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.3",
+    "form.validation": "*"
+  }
+}
